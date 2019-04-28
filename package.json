@@ -1,0 +1,44 @@
+{
+  "name": "wasmboy-plugin-hqx",
+  "version": "0.0.1",
+  "description": "Plugin for hqx upscaling in wasmboy",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run dev",
+    "watch": "npm run dev",
+    "dev": "npx rollup -c -w",
+    "build": "npx rollup -c",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/torch2424/wasmboy-plugin-hqx.git"
+  },
+  "author": "Aaron Turner",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/torch2424/wasmboy-plugin-hqx/issues"
+  },
+  "homepage": "https://github.com/torch2424/wasmboy-plugin-hqx#readme",
+  "devDependencies": {
+    "@ampproject/rollup-plugin-closure-compiler": "^0.8.5",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/plugin-transform-react-jsx": "^7.2.0",
+    "gh-pages": "^2.0.1",
+    "np": "^3.1.0",
+    "npm-run-all": "^4.1.5",
+    "postcss-import": "^12.0.1",
+    "preact": "^8.4.2",
+    "rollup": "^1.1.0",
+    "rollup-plugin-babel": "^4.3.0",
+    "rollup-plugin-bundle-size": "^1.0.2",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-serve": "^1.0.0"
+  }
+}
