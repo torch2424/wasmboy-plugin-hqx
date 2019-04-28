@@ -14,6 +14,6 @@ extern {
 }
 
 #[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, wasmboy-plugin-hqx!");
+pub fn greet(name: &str) {
+    alert(&format!("Hello, {}!", name));
 }
