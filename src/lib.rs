@@ -49,6 +49,9 @@ pub fn hqx(image_data_array: &mut [u8]) -> [u32] {
     
     // TODO: Turn rgb byte array, unto u32
     // https://github.com/CryZe/wasmboy-rs/blob/master/src/main.rs#L227
+    // TODO: Also, just realized for below. Just do it the easy way.
+    // Iterate over the input, and cast to u32 manually :p
+    let mut buffer = [u32; GB_WIDTH * GB_HEIGHT];
 
     // Get our passed u8IntArray as a u32 array for hqx
     // Need to iterate over the array, map to case all values to u32
