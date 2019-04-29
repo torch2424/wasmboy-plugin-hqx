@@ -9,6 +9,8 @@
     "watch": "npm run dev",
     "dev": "npx rollup -c -w",
     "build": "npx rollup -c",
+    "wasm:build": "npx run-s wasm:build:es6",
+    "wasm:build:es6": "wasm-pack build --target web",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
