@@ -1,6 +1,7 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
+import url from 'rollup-plugin-url';
 import serve from 'rollup-plugin-serve';
 import bundleSize from 'rollup-plugin-bundle-size';
 import postcss from 'rollup-plugin-postcss';
@@ -34,6 +35,11 @@ let plugins = [
   json({
     exclude: 'node_modules/**'
   }),
+  url({
+    limit: 10000 * 1024, // inline files < 10k, copy files > 10k
+    include: ['**/*.wasm', '**/*.gb', '**/*.gbc'],
+    emitFiles: false
+  }),
   postcss({
     extensions: ['.css'],
     plugins: [postcssImport()]
@@ -48,7 +54,7 @@ if (process.env.ROLLUP_WATCH) {
     ...plugins,
     serve({
       contentBase: ['dist/', 'build/', 'lib/'],
-      port: 8080
+      port: 8000
     })
   ]
 }

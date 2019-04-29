@@ -1,3 +1,7 @@
+# JS Build output
+dist/
+build/
+
 # System files
 **/.DS_Store
 
