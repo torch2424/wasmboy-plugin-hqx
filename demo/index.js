@@ -38,7 +38,7 @@ class PluginDemo extends Component {
       WasmBoy.setCanvas(canvasElement);
 
       await WasmBoy.loadROM(GameROMs.TobuTobuGirl);
-      WasmBoy.play();
+      console.log('Ready');
     };
     playROMTask();
   }
