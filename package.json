@@ -5,6 +5,7 @@
   "main": "dist/wasmboy-plugin-hqx.cjs.js",
   "module": "dist/wasmboy-plugin-hqx.esm.js",
   "scripts": {
+    "postinstall": "cargo build",
     "start": "npm run dev",
     "watch": "npm run dev",
     "dev": "npx rollup -c -w",
