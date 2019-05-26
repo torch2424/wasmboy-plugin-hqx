@@ -30,58 +30,49 @@ macro_rules! console_log {
     ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
 }
 
-// Define our memory that will house our final rgba array
+// Define our Buffers
+const ARGB_BUFFER: [u32; GB_WIDTH * GB_HEIGHT] = [0; GB_WIDTH * GB_HEIGHT];
+const ARGB_BUFFER_POINTER: *const u32 = &ARGB_BUFFER as *const u32;
+
+// Create our destination array for the hqx function
+// This creates an array, and sets the length to be the gb width
+// Times our upscale factor.
+// https://github.com/CryZe/wasmboy-rs/blob/master/src/main.rs#L71
+const HQX_BUFFER: [u32; HQX_BUFFER_SIZE] = [0; HQX_BUFFER_SIZE];
+
+// Our final RGBA image data arrays passed back to js
 const RGBA_BUFFER: [u8; HQX_BUFFER_SIZE * 4] = [0; HQX_BUFFER_SIZE * 4];
 const RGBA_BUFFER_POINTER: *const u8 = &RGBA_BUFFER as *const u8;
+
+#[wasm_bindgen]
+pub fn get_pointer_to_32_bit_input_buffer() -> *const u32 {
+    return ARGB_BUFFER_POINTER;
+}
 
 // How to pass around memory
 // https://github.com/rustwasm/wasm-bindgen/issues/964
 // https://rustwasm.github.io/docs/wasm-bindgen/reference/types/number-slices.html
 // https://github.com/rustwasm/wasm-bindgen/issues/111#issuecomment-455329490
 #[wasm_bindgen]
-pub fn hqx(image_data_array: &[u8]) -> *const u8 {    
-    // Turn rgb image byte array, into u32
-    // https://github.com/CryZe/wasmboy-rs/blob/master/src/main.rs#L227
-    let mut argb_buffer: [u32; GB_WIDTH * GB_HEIGHT] = [0; GB_WIDTH * GB_HEIGHT];
+pub fn hqx() -> *const u8 {  
 
-    // Fill our u32 rgb buffer, with our byte
-    // image data
-    let mut i = 0;
-    let alpha: u32 = 0xFF << 24;
-    while i < image_data_array.len() {
-        // Get our r,g,b as u3
-        let mut red: u32 = (image_data_array[i]).into();
-        red = red << 16;
-        let mut green: u32 = (image_data_array[i + 1]).into();
-        green = green << 8;
-        let blue: u32 = (image_data_array[i + 2]).into();
-        
-        argb_buffer[i] = alpha + red + green + blue;
-
-        // Increase to the next pixel (rgba)
-        i += 4;
-    }
-
-    // Create our destination array
-    // This creates an array, and sets the length to be the gb width
-    // Times our upscale factor.
-    // https://github.com/CryZe/wasmboy-rs/blob/master/src/main.rs#L71
-    let mut hqx_buffer: [u32; HQX_BUFFER_SIZE] = [0; HQX_BUFFER_SIZE];
+    console_log!("{}", ARGB_BUFFER[0]);
 
     // Finally lets pass in our vectors
     // https://github.com/CryZe/wasmboy-rs/blob/master/hqx/src/hq4x.rs#L704
     // https://github.com/CryZe/wasmboy-rs/blob/master/src/main.rs#L237
-    hq3x(&argb_buffer, &mut hqx_buffer, GB_WIDTH, GB_HEIGHT);
+    hq4x(&ARGB_BUFFER, &mut HQX_BUFFER, GB_WIDTH, GB_HEIGHT);
 
     // Convert back to an rgba u8 buffer
     // Where every component r,g,b,a is it's own
     // index.
-    i = 0;
-    while i < hqx_buffer.len() {
+    // Define our memory that will house our final rgba array
+    let mut i = 0;
+    while i < HQX_BUFFER.len() {
         // Get our r,g,b as u32
-        let red: u8 = (hqx_buffer[i] >> 16 & 0xF) as u8;
-        let green: u8 = (hqx_buffer[i] >> 8 & 0xF) as u8;
-        let blue: u8 = (hqx_buffer[i] & 0xF) as u8;
+        let red: u8 = (HQX_BUFFER[i] >> 16 & 0xF) as u8;
+        let green: u8 = (HQX_BUFFER[i] >> 8 & 0xF) as u8;
+        let blue: u8 = (HQX_BUFFER[i] & 0xF) as u8;
         
         let pixel_base = i * 4;
         RGBA_BUFFER[pixel_base] = red;
