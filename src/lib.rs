@@ -49,6 +49,14 @@ pub fn get_pointer_to_32_bit_input_buffer() -> *const u32 {
     return ARGB_BUFFER_POINTER;
 }
 
+// TODO: Write function to return index 0 of a buffer.
+// This is to test if pointers are woking
+#[wasm_bindgen]
+pub fn index_zero() -> u32 {
+    return ARGB_BUFFER[0];
+}
+
+
 // How to pass around memory
 // https://github.com/rustwasm/wasm-bindgen/issues/964
 // https://rustwasm.github.io/docs/wasm-bindgen/reference/types/number-slices.html
