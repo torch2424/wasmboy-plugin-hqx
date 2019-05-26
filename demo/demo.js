@@ -2,9 +2,9 @@ import { h, render, Component } from 'preact';
 
 import {WasmBoy} from '../../wasmboy/dist/wasmboy.wasm.esm';
 
-import './index.css';
+import './demo.css';
 
-import wasmboyHqx from '../lib/index';
+import wasmboyHqx from '../lib/lib';
 
 // Import our open source roms
 import { GameROMs } from 'shared-gb/openSourceROMs/urlImports';

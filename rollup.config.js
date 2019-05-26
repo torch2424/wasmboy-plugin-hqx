@@ -59,11 +59,11 @@ if (process.env.ROLLUP_WATCH) {
   ]
 }
 
-writeIndexHtmlToBuild('index.iife.js');
+writeIndexHtmlToBuild('demo.iife.js');
 
 export default [
 	{
-    input: 'lib/index.js',
+    input: 'lib/lib.js',
 		output: [
       { 
         file: pkg.main, 
@@ -81,7 +81,7 @@ export default [
     ]
   },
   {
-    input: 'lib/index.js',
+    input: 'lib/lib.js',
     output: [
       { 
         file: pkg.main, 
@@ -91,9 +91,9 @@ export default [
     plugins
   },
   {
-    input: 'demo/index.js',
+    input: 'demo/demo.js',
     output: [
-      { file: 'build/index.iife.js', format: 'iife' }
+      { file: 'build/demo.iife.js', format: 'iife' }
     ],
     plugins
   }
