@@ -39,6 +39,7 @@ class PluginDemo extends Component {
 
       await WasmBoy.loadROM(GameROMs.TobuTobuGirl);
       console.log('Ready');
+      await WasmBoy.play();
     };
     playROMTask();
   }

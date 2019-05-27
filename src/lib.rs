@@ -58,15 +58,17 @@ unsafe fn hqx() {
     let mut i = 0;
     while i < hqx_buffer.len() {
         // Get our r,g,b as u32
-        let red: u8 = (hqx_buffer[i] >> 16 & 0xF) as u8;
-        let green: u8 = (hqx_buffer[i] >> 8 & 0xF) as u8;
-        let blue: u8 = (hqx_buffer[i] & 0xF) as u8;
+        // https://github.com/CryZe/wasmboy-rs/blob/master/hqx/src/common.rs#L3
+        let alpha: u8 = ((hqx_buffer[i] >> 24) & 0xFF) as u8;
+        let red: u8 = ((hqx_buffer[i] >> 16) & 0xFF) as u8;
+        let green: u8 = ((hqx_buffer[i] >> 8) & 0xFF) as u8;
+        let blue: u8 = (hqx_buffer[i] & 0xFF) as u8;
 
         let pixel_base = i * 4;
         OUTPUT_BUFFER[pixel_base] = red;
         OUTPUT_BUFFER[pixel_base + 1] = green;
         OUTPUT_BUFFER[pixel_base + 2] = blue;
-        OUTPUT_BUFFER[pixel_base + 3] = 255;
+        OUTPUT_BUFFER[pixel_base + 3] = alpha;
 
         // Increase to the next pixel (argba in u32)
         i += 1;
