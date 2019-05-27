@@ -30,9 +30,13 @@ macro_rules! console_log {
     ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
 }
 
+// How to pass around by memory:
+// https://github.com/rustwasm/wasm-bindgen/issues/111#issuecomment-455268735
+
+/*
 // Define our Buffers
 const ARGB_BUFFER: [u32; GB_WIDTH * GB_HEIGHT] = [0; GB_WIDTH * GB_HEIGHT];
-const ARGB_BUFFER_POINTER: *const u32 = &ARGB_BUFFER as *const u32;
+const ARGB_BUFFER_POINTER: *const u32 = ARGB_BUFFER.as_ptr();
 
 // Create our destination array for the hqx function
 // This creates an array, and sets the length to be the gb width
@@ -40,21 +44,32 @@ const ARGB_BUFFER_POINTER: *const u32 = &ARGB_BUFFER as *const u32;
 // https://github.com/CryZe/wasmboy-rs/blob/master/src/main.rs#L71
 const HQX_BUFFER: [u32; HQX_BUFFER_SIZE] = [0; HQX_BUFFER_SIZE];
 
-// Our final RGBA image data arrays passed back to js
-const RGBA_BUFFER: [u8; HQX_BUFFER_SIZE * 4] = [0; HQX_BUFFER_SIZE * 4];
-const RGBA_BUFFER_POINTER: *const u8 = &RGBA_BUFFER as *const u8;
+*/
 
+// Our final RGBA image data arrays passed back to js
+const RGBA_BUFFER: [u8; GB_WIDTH * GB_HEIGHT * 3 * 4] = [0; GB_WIDTH * GB_HEIGHT * 3 * 4];
+const RGBA_BUFFER_POINTER: *const u8 = RGBA_BUFFER.as_ptr();
+
+/*
 #[wasm_bindgen]
 pub fn get_pointer_to_32_bit_input_buffer() -> *const u32 {
     return ARGB_BUFFER_POINTER;
 }
+*/
 
+#[wasm_bindgen]
+pub fn get_pointer_to_8_bit_output_buffer() -> *const u8 {
+    return RGBA_BUFFER_POINTER;
+}
+
+/*
 // TODO: Write function to return index 0 of a buffer.
 // This is to test if pointers are woking
 #[wasm_bindgen]
-pub fn index_zero() -> u32 {
-    return ARGB_BUFFER[0];
+pub fn get_index(index: usize) -> u32 {
+    return ARGB_BUFFER[index];
 }
+*/
 
 
 // How to pass around memory
@@ -62,15 +77,25 @@ pub fn index_zero() -> u32 {
 // https://rustwasm.github.io/docs/wasm-bindgen/reference/types/number-slices.html
 // https://github.com/rustwasm/wasm-bindgen/issues/111#issuecomment-455329490
 #[wasm_bindgen]
-pub fn hqx() -> *const u8 {  
+pub fn hqx() -> Vec<u8> {  
 
-    console_log!("{}", ARGB_BUFFER[0]);
+    /*
+    console_log!("wasm argb {}", ARGB_BUFFER[0]);
+    console_log!("wasm hqx {}", HQX_BUFFER[0]);
+    console_log!("wasm rgba {}", RGBA_BUFFER[0]);
 
     // Finally lets pass in our vectors
     // https://github.com/CryZe/wasmboy-rs/blob/master/hqx/src/hq4x.rs#L704
     // https://github.com/CryZe/wasmboy-rs/blob/master/src/main.rs#L237
-    hq4x(&ARGB_BUFFER, &mut HQX_BUFFER, GB_WIDTH, GB_HEIGHT);
+    // hq3x(&ARGB_BUFFER, &mut HQX_BUFFER, GB_WIDTH, GB_HEIGHT);
 
+    console_log!("wasm argb {}", ARGB_BUFFER[0]);
+    console_log!("wasm hqx 0 {}", HQX_BUFFER[0]);
+    console_log!("wasm hqx 1 {}", HQX_BUFFER[1]);
+    console_log!("wasm hqx & {}", &HQX_BUFFER[0]);
+    */
+
+    /*
     // Convert back to an rgba u8 buffer
     // Where every component r,g,b,a is it's own
     // index.
@@ -91,7 +116,23 @@ pub fn hqx() -> *const u8 {
         // Increase to the next pixel (argba in u32)
         i += 1;
     }
+    */
 
-    return RGBA_BUFFER_POINTER;
+    let mut i = 0;
+    while i < RGBA_BUFFER.len() {
+        let pixel_base = i;
+        RGBA_BUFFER[pixel_base] = 55;
+        RGBA_BUFFER[pixel_base + 1] = 55;
+        RGBA_BUFFER[pixel_base + 2] = 55;
+        RGBA_BUFFER[pixel_base + 3] = 255;
+
+        // Increase to the next pixel (argba in u32)
+        i += 4;
+    }
+
+    console_log!("wasm rgba 0 {}", RGBA_BUFFER[0]);
+    console_log!("wasm rgba 3 {}", RGBA_BUFFER[3]);
+
+    return RGBA_BUFFER.to_vec();
 }
 
