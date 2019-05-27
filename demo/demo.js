@@ -12,21 +12,6 @@ import { GameROMs } from 'shared-gb/openSourceROMs/urlImports';
 console.log('wasmboy-plugin-hqx demo');
 console.log('WasmBoy', WasmBoy);
 
-// Hotkeys
-WasmBoy.ResponsiveGamepad.onInputsChange(
-  [
-    WasmBoy.ResponsiveGamepad.RESPONSIVE_GAMEPAD_INPUTS.SPECIAL
-  ],
-  state => {
-    // Play / Pause
-    if (WasmBoy.isPlaying() && state.SPECIAL) {
-      WasmBoy.pause();
-    } else if (!WasmBoy.isPlaying() && state.SPECIAL) {
-      WasmBoy.play();
-    }
-  }
-);
-
 class PluginDemo extends Component {
   componentDidMount() {
     // Get our HTML5 Canvas element
@@ -48,7 +33,11 @@ class PluginDemo extends Component {
       <div>
         <h1>wasmboy-plugin-hqx</h1>
         <h3>Demo Rom: <a href="http://tangramgames.dk/tobutobugirl/" target="_blank">Tobu Tobu Girl</a></h3>
-        <h3>Press Space to Play/Pause</h3>
+        <div>
+          <button onClick={() => WasmBoy.play()}>Play</button>
+          <button onClick={() => WasmBoy.pause()}>Pause</button>
+        </div>
+        <br />
         <canvas></canvas>
       </div>
     );
