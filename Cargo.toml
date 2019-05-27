@@ -9,6 +9,10 @@ name = "wasmboypluginhqx"
 path = "src/lib.rs"
 crate-type = ["cdylib", "rlib"]
 
+[dependencies]
+clippy = {version = "*", optional = true}
+hqx = { git = "https://github.com/CryZe/wasmboy-rs" }
+
 [profile.release]
 lto = true
 opt-level = "s"
