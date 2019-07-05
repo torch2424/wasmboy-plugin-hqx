@@ -1,0 +1,15 @@
+{
+  "name": "wasmboypluginhqx",
+  "collaborators": [
+    "Aaron Turner <aaron@aaronthedev.com>"
+  ],
+  "version": "1.0.0",
+  "files": [
+    "wasmboypluginhqx_bg.wasm",
+    "wasmboypluginhqx.js",
+    "wasmboypluginhqx.d.ts"
+  ],
+  "module": "wasmboypluginhqx.js",
+  "types": "wasmboypluginhqx.d.ts",
+  "sideEffects": "false"
+}

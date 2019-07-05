@@ -11,7 +11,7 @@
     "dev": "npx rollup -c -w",
     "build": "npx rollup -c",
     "wasm:build": "npx run-s wasm:build:es6",
-    "wasm:build:es6": "wasm-pack build --target web",
+    "wasm:build:es6": "./build.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -46,6 +46,6 @@
     "rollup-plugin-serve": "^1.0.0",
     "rollup-plugin-url": "^2.2.1",
     "shared-gb": "git+https://github.com/torch2424/shared-gb-js.git",
-    "wasmboy": "^0.4.0"
+    "wasmboy": "^0.5.0"
   }
 }

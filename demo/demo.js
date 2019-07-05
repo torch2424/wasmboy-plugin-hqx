@@ -1,6 +1,6 @@
 import { h, render, Component } from 'preact';
 
-import {WasmBoy} from '../../wasmboy/dist/wasmboy.wasm.esm';
+import {WasmBoy} from 'wasmboy';
 
 import './demo.css';
 

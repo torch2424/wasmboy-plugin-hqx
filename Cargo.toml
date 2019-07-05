@@ -1,6 +1,6 @@
 [package]
 name = "wasmboypluginhqx"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Aaron Turner <aaron@aaronthedev.com>"]
 edition = "2018"
 
@@ -11,8 +11,6 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 clippy = {version = "*", optional = true}
+wasm-bindgen = "0.2"
 hqx = { git = "https://github.com/CryZe/wasmboy-rs" }
 
-[profile.release]
-lto = true
-opt-level = "s"
