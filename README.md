@@ -4,7 +4,7 @@ Plugin for [WasmBoy](https://github.com/torch2424/wasmboy) to add support for hq
 
 This plugin uses the [hqx crate](https://github.com/CryZe/wasmboy-rs/tree/master/hqx) from [wasmboy-rs](https://github.com/CryZe/wasmboy-rs).
 
-[Demo]()
+[Demo](https://torch2424.github.io/wasmboy-plugin-hqx/)
 
 ![WasmBoy Hq3x Example](./assets/wasmboyPluginHqx.png)
 
