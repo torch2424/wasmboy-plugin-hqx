@@ -61,35 +61,29 @@ if (process.env.ROLLUP_WATCH) {
 
 writeIndexHtmlToBuild('demo.iife.js');
 
-export default [
-	{
+const libBuilds = [
+  {
     input: 'lib/lib.js',
-		output: [
+    output: [
       { 
-        file: pkg.main, 
-        format: 'cjs' 
+        file: pkg.iife,
+        name: 'WasmBoyPluginHqx',
+        format: 'iife' 
       },
       { 
         file: pkg.module, 
         format: 'es' 
       }
-		],
+    ],
     plugins : [
       ...plugins,
       compiler(),
       bundleSize()
     ]
-  },
-  {
-    input: 'lib/lib.js',
-    output: [
-      { 
-        file: pkg.main, 
-        format: 'cjs' 
-      }
-    ],
-    plugins
-  },
+  }
+];
+
+const demoBuilds = [
   {
     input: 'demo/demo.js',
     output: [
@@ -98,3 +92,19 @@ export default [
     plugins
   }
 ];
+
+let exportedBuilds = [];
+if (process.env.LIB) {
+  exportedBuilds = [
+    ...exportedBuilds,
+    ...libBuilds
+  ]
+}
+if (process.env.DEMO) {
+  exportedBuilds = [
+    ...exportedBuilds,
+    ...demoBuilds
+  ]
+}
+
+export default exportedBuilds;

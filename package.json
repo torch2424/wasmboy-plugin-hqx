@@ -3,16 +3,21 @@
   "version": "0.0.1",
   "description": "Plugin for hqx upscaling in wasmboy",
   "main": "dist/wasmboy-plugin-hqx.cjs.js",
+  "iife": "dist/wasmboy-plugin-hqx.iife.js",
   "module": "dist/wasmboy-plugin-hqx.esm.js",
   "scripts": {
-    "postinstall": "cargo build",
+    "postinstall": "npm run build",
+    "build": "npx run-s wasm:build lib:build",
     "start": "npm run dev",
     "watch": "npm run dev",
-    "dev": "npx rollup -c -w",
-    "build": "npx rollup -c",
-    "wasm:build": "npx run-s wasm:build:es6",
-    "wasm:build:es6": "./build.sh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npx rollup -c -w --environment LIB,DEMO",
+    "lib:build": "npx rollup -c --environment LIB",
+    "demo:build": "npx rollup -c --environment DEMO",
+    "wasm:build": "./wasmBuild.sh",
+    "test": "echo \"No test specified\"",
+    "deploy": "npx run-s build lib:deploy demo:deploy",
+    "lib:deploy": "npx np",
+    "demo: deploy": "npx gh-pages -d build"
   },
   "repository": {
     "type": "git",
