@@ -1,6 +1,8 @@
 # wasmboy-plugin-hqx
 
-Plugin for WasmBoy to add support for hqx upscaling. Built with Rust for WebAssembly. This plugin uses the [hqx crate](https://github.com/CryZe/wasmboy-rs/tree/master/hqx) from [wasmboy-rs](https://github.com/CryZe/wasmboy-rs).
+Plugin for [WasmBoy](https://github.com/torch2424/wasmboy) to add support for hqx upscaling.🖼️ Built with Rust for WebAssembly. 🦀
+
+This plugin uses the [hqx crate](https://github.com/CryZe/wasmboy-rs/tree/master/hqx) from [wasmboy-rs](https://github.com/CryZe/wasmboy-rs).
 
 [Demo]()
 
