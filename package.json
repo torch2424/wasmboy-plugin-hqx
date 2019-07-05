@@ -1,6 +1,6 @@
 {
   "name": "wasmboy-plugin-hqx",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Plugin for hqx upscaling in wasmboy",
   "main": "dist/wasmboy-plugin-hqx.cjs.js",
   "iife": "dist/wasmboy-plugin-hqx.iife.js",
